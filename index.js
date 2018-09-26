@@ -1,18 +1,5 @@
 import { memory } from "chip-8/chip_8_bg";
-import { Cpu } from "chip-8";
-
-const cpu = Cpu.new();
-cpu.initialize();
-
-const PIXEL_SIZE = 10;
-const SCREEN_WIDTH = cpu.screen_width();
-const SCREEN_HEIGHT = cpu.screen_height();
-
-const canvas = document.getElementById("chip-8-canvas");
-canvas.height = PIXEL_SIZE * SCREEN_HEIGHT;
-canvas.width = PIXEL_SIZE * SCREEN_WIDTH;
-
-const ctx = canvas.getContext('2d');
+import { Chip8 } from "chip-8";
 
 // Handle keyboard input
 // 123C => 1234
@@ -20,30 +7,55 @@ const ctx = canvas.getContext('2d');
 // 789E => ASDF
 // A0BF => ZXCV
 const KEYS = [88, 49, 50, 51, 81, 87, 69, 65, 83, 68, 90, 67, 52, 82, 70, 86];
+
 document.addEventListener('keydown', event => {
+  console.log(event);
   let index = KEYS.indexOf(event.keyCode);
   if (index !== -1) {
-    cpu.press_key(index);
+    chip8.press_key(index);
+    chip8.execute_cycle();
   }
 })
 
 document.addEventListener('keyup', event => {
   let index = KEYS.indexOf(event.keyCode);
   if (index !== -1) {
-    cpu.release_key(index);
+    chip8.release_key(index);
   }
 })
 
-fetch("roms/15PUZZLE")
+const playBeep = () => {
+  let beep = new Audio("./beep.mp3");
+  beep.play();
+}
+
+const chip8 = Chip8.new();
+const CYCLES_PER_SECOND = 10;
+const PIXEL_SIZE = 10;
+const SCREEN_WIDTH = chip8.screen_width();
+const SCREEN_HEIGHT = chip8.screen_height();
+
+const canvas = document.getElementById("chip-8-canvas");
+const ctx = canvas.getContext('2d');
+canvas.height = PIXEL_SIZE * SCREEN_HEIGHT;
+canvas.width = PIXEL_SIZE * SCREEN_WIDTH;
+
+let frames = 0;
+const startTime = new Date();
+
+fetch("roms/TETRIS")
   .then(response => response.arrayBuffer())
   .then(buffer => {
-    cpu.load_rom(new Uint8Array(buffer));
+    chip8.load_rom(new Uint8Array(buffer));
     render();
   });
 
+
 const drawScreen = () => {
-  const screenPtr = cpu.screen();
+  const screenPtr = chip8.screen();
   const screen = new Uint8Array(memory.buffer, screenPtr, SCREEN_WIDTH * SCREEN_HEIGHT / 8);
+
+  ctx.beginPath();
 
   for (let row = 0; row < SCREEN_HEIGHT; row++) {
     for (let col = 0; col < SCREEN_WIDTH; col++) {
@@ -61,10 +73,22 @@ const drawScreen = () => {
       );
     }
   }
+
+  ctx.closePath();
 };
 
 const render = () => {
-  cpu.execute_cycle();
+  frames++;
+  for (let i = 0; i < CYCLES_PER_SECOND; i++) {
+    chip8.execute_cycle();
+    if (chip8.should_draw()) {
+      break;
+    }
+  }
+  chip8.decrement_timers();
   drawScreen();
+  if (chip8.should_beep()) {
+    playBeep();
+  }
   window.requestAnimationFrame(render);
 };
