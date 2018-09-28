@@ -1,5 +1,5 @@
-import { memory } from "chip-8/chip_8_bg";
-import { Chip8 } from "chip-8";
+import { memory } from "chip-8-wasm/chip_8_wasm_bg";
+import { Chip8 } from "chip-8-wasm";
 
 const chip8 = Chip8.new();
 const CYCLES_PER_FRAME = 20;

@@ -18,7 +18,7 @@
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "license": "(MIT OR Apache-2.0)",
   "devDependencies": {
-    "chip-8": "file:../chip-8-rs/pkg",
+    "chip-8-wasm": "file:../chip-8-rs/pkg",
     "copy-webpack-plugin": "^4.5.2",
     "gh-pages": "^1.2.0",
     "webpack": "^4.16.3",
