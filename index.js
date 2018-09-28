@@ -2,41 +2,50 @@ import { memory } from "chip-8/chip_8_bg";
 import { Chip8 } from "chip-8";
 
 const chip8 = Chip8.new();
-const CYCLES_PER_FRAME = 10;
-const PIXEL_SIZE = 10;
-const SCREEN_WIDTH = chip8.screen_width();
-const SCREEN_HEIGHT = chip8.screen_height();
+const CYCLES_PER_FRAME = 20;
+const MIN_PIXEL_SIZE = 10;
+const MAX_SCREEN_WIDTH = 128;
+const MAX_SCREEN_HEIGHT = 64;
 const ROMS = [
   "15PUZZLE",
+  "ALIEN",
+  "ANT",
   "BLINKY",
   "BLITZ",
   "BRIX",
+  "CAR",
   "CONNECT4",
+  "FIELD",
   "GUESS",
   "HIDDEN",
   "INVADERS",
+  "JOUST",
   "KALEID",
   "MAZE",
   "MERLIN",
   "MISSILE",
+  "PIPER",
   "PONG",
   "PONG2",
   "PUZZLE",
+  "RACE",
+  "SPACEFIG",
   "SYZYGY",
   "TANK",
-  "TEST",
   "TETRIS",
   "TICTAC",
+  "UBOAT",
   "UFO",
   "VBRIX",
   "VERS",
   "WIPEOFF",
+  "WORM3",
 ];
 
 const canvas = document.getElementById("chip-8-canvas");
 const ctx = canvas.getContext('2d');
-canvas.height = PIXEL_SIZE * SCREEN_HEIGHT;
-canvas.width = PIXEL_SIZE * SCREEN_WIDTH;
+canvas.height = MIN_PIXEL_SIZE * MAX_SCREEN_HEIGHT;
+canvas.width = MIN_PIXEL_SIZE * MAX_SCREEN_WIDTH;
 
 let isRunning = false;
 
@@ -52,6 +61,7 @@ document.addEventListener('keydown', event => {
   let index = KEYS.indexOf(event.keyCode);
   if (index !== -1) {
     chip8.press_key(index);
+    chip8.execute_cycle();
   }
 });
 
@@ -69,6 +79,9 @@ const stopButton = document.getElementById("stop-button");
 const stepButton = document.getElementById("step-button");
 const romList = document.getElementById("rom-list");
 const loadButton = document.getElementById("load-button");
+startButton.disabled = true;
+stopButton.disabled = true;
+stepButton.disabled = true;
 
 ROMS.forEach(romName => {
   const romOption = document.createElement("option");
@@ -123,24 +136,46 @@ const playBeep = () => {
 
 const drawScreen = () => {
   const screenPtr = chip8.screen();
-  const screen = new Uint8Array(memory.buffer, screenPtr, SCREEN_WIDTH * SCREEN_HEIGHT / 8);
+  const screen = new Uint8Array(memory.buffer, screenPtr, MAX_SCREEN_WIDTH * MAX_SCREEN_HEIGHT / 8);
 
   ctx.beginPath();
 
-  for (let row = 0; row < SCREEN_HEIGHT; row++) {
-    for (let col = 0; col < SCREEN_WIDTH; col++) {
-      const index = row * SCREEN_WIDTH + col;
+  const isSuper = chip8.screen_height() == MAX_SCREEN_HEIGHT;
+  const pixelSize = MIN_PIXEL_SIZE * (isSuper ? 1 : 2);
+
+  ctx.fillStyle = "#000000"
+  const height = chip8.screen_height();
+  const width = chip8.screen_width();
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
+      const index = row * width + col;
       const byteIndex = Math.floor(index / 8);
       const bitIndex = index % 8;
+      if ((screen[byteIndex] & (1 << bitIndex)) != 0) {
+        ctx.fillRect(
+          col * pixelSize,
+          row * pixelSize,
+          pixelSize,
+          pixelSize
+        );
+      }
+    }
+  }
 
-      ctx.fillStyle = (screen[byteIndex] & (1 << bitIndex)) != 0 ? "#000000" : "#FFFFFF";
-
-      ctx.fillRect(
-        col * PIXEL_SIZE,
-        row * PIXEL_SIZE,
-        PIXEL_SIZE,
-        PIXEL_SIZE
-      );
+  ctx.fillStyle = "#FFFFFF"
+  for (let row = 0; row < chip8.screen_height(); row++) {
+    for (let col = 0; col < chip8.screen_width(); col++) {
+      const index = row * chip8.screen_width() + col;
+      const byteIndex = Math.floor(index / 8);
+      const bitIndex = index % 8;
+      if ((screen[byteIndex] & (1 << bitIndex)) == 0) {
+        ctx.fillRect(
+          col * pixelSize,
+          row * pixelSize,
+          pixelSize,
+          pixelSize
+        );
+      }
     }
   }
 
