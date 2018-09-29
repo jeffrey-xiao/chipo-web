@@ -2,6 +2,7 @@ import { memory } from "chip-8-wasm/chip_8_wasm_bg";
 import { Chip8 } from "chip-8-wasm";
 
 const chip8 = Chip8.new();
+const beep_sfx = new Audio("./assets/beep.mp3");
 const CYCLES_PER_FRAME = 20;
 const MIN_PIXEL_SIZE = 10;
 const MAX_SCREEN_WIDTH = 128;
@@ -115,7 +116,7 @@ const step = () => {
 const load = () => {
   stop();
 
-  fetch(`roms/${romList.options[romList.selectedIndex].value}`)
+  fetch(`assets/roms/${romList.options[romList.selectedIndex].value}`)
     .then(response => response.arrayBuffer())
     .then(buffer => {
       chip8.load_rom(new Uint8Array(buffer))
@@ -130,8 +131,7 @@ loadButton.addEventListener("click", load);
 
 // Sound
 const playBeep = () => {
-  let beep = new Audio("./beep.mp3");
-  beep.play();
+  beep_sfx.play();
 }
 
 const drawScreen = () => {
