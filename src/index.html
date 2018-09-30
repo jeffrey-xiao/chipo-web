@@ -2,14 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>chip-8 - Jeffrey Xiao</title>
+    <title>chip-8-web - Jeffrey Xiao</title>
   </head>
   <body>
-    <button id="start-button">Start</button>
-    <button id="stop-button">Stop</button>
-    <button id="step-button">Step</button>
-    <select id="rom-list"></select>
-    <button id="load-button">Load</button>
+    <div id="header">chip-8-web</div>
+
+    <div id="menu-buttons">
+      <button id="start-button">Start</button>
+      <button id="stop-button">Stop</button>
+      <button id="step-button">Step</button>
+      <span class="styled-select"><select id="rom-list" class="select-div"></select></span>
+      <button id="load-button">Load</button>
+    </div>
 
 
     <canvas id="chip-8-canvas" style="border: solid 1px black;"></canvas>

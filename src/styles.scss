@@ -1,0 +1,142 @@
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab');
+
+$header-font: 'Josefin Slab', serif;
+$body-font: 'Inconsolata', monospace;
+
+$base1: rgb(27, 34, 40);
+$base2: rgb(51, 64, 75);
+$base3: rgb(91, 112, 133);
+$base4: rgb(117, 138, 160);
+
+$shade1: rgb(218, 228, 237);
+
+$accent1: rgb(106, 29, 27);
+$accent2: rgb(167, 46, 43);
+$accent3: rgb(242, 205, 204);
+
+@mixin transform($transforms) {
+	-webkit-transform: $transforms;
+	   -moz-transform: $transforms;
+	    -ms-transform: $transforms;
+	     -o-transform: $transforms;
+          transform: $transforms;
+}
+
+@mixin appearance($prop) {
+  -webkit-appearance: $prop;
+     -moz-appearance: $prop;
+          appearance: $prop;
+}
+
+
+html, button, select {
+  font-family: $body-font;
+  color: $base1;
+}
+
+button {
+  border: 1px solid $accent2;
+  border-radius: 3px;
+  box-shadow: inset inset 0 0 0 1px $shade1;
+  padding: 5px 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: $accent2;
+  background: #FFF;
+  transition: 50ms background;
+
+  &:hover {
+    border: 1px solid $accent2;
+    background: $accent2;
+    color: #FFF;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    cursor: auto;
+    color: $base4;
+    border: 1px solid $shade1;
+
+    &:hover {
+      border: 1px solid $shade1;
+      background: #FFF;
+      cursor: auto;
+    }
+  }
+}
+
+select {
+  border: 1px solid $accent2;
+  border-radius: 3px;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 4px;
+  padding-right: 20px;
+  color: $accent2;
+  background-color: $accent3;
+  @include appearance(none);
+}
+
+.styled-select {
+  position: relative;
+}
+
+.styled-select:before {
+  content: '▼';
+  font-family: FontAwesome;
+  color: $accent2;
+  border-left: 1px solid $accent2;
+  display: inline-block;
+  position: absolute;
+  right: 2px;
+  top: -7px;
+  padding-top: 2px;
+  padding-bottom: 4px;
+  pointer-events: none;
+}
+
+#header {
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  margin-left: 50%;
+  margin-bottom: 50px;
+  @include transform(translateX(-50%));
+  font-family: $header-font;
+  font-size: 60px;
+  padding: 30px 20px 25px 20px;
+  border-bottom: 3px solid $accent1;
+}
+
+#menu-buttons {
+  display: inline-block;
+  position: relative;
+  margin-left: 50%;
+  @include transform(translateX(-50%));
+}
+
+#registers {
+  padding: 5px;
+  border: 1px solid black;
+  display: inline-grid;
+  width: 300px;
+  grid-template-columns: 50% 50%;
+}
+
+.register {
+  margin: 0px;
+  font-family: 'Inconsolata', monospace;
+}
+
+#assembly-code {
+  height: 100px;
+  width: 800px;
+  overflow: scroll;
+  display: inline-block;
+}
+
+.assembly-line {
+  margin: 0px;
+  font-family: 'Inconsolata', monospace;
+}

@@ -1,6 +1,6 @@
 import { memory } from "chip-8-wasm/chip_8_wasm_bg";
 import { Chip8 } from "chip-8-wasm";
-import './styles.css';
+import './styles.scss';
 
 const chip8 = Chip8.new();
 const beep_sfx = new Audio("./assets/beep.mp3");
