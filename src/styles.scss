@@ -16,10 +16,10 @@ $accent2: rgb(167, 46, 43);
 $accent3: rgb(242, 205, 204);
 
 @mixin transform($transforms) {
-	-webkit-transform: $transforms;
-	   -moz-transform: $transforms;
-	    -ms-transform: $transforms;
-	     -o-transform: $transforms;
+  -webkit-transform: $transforms;
+     -moz-transform: $transforms;
+      -ms-transform: $transforms;
+       -o-transform: $transforms;
           transform: $transforms;
 }
 
@@ -101,7 +101,7 @@ select {
   display: inline-block;
   position: relative;
   margin-left: 50%;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   @include transform(translateX(-50%));
   font-family: $header-font;
   font-size: 60px;
@@ -113,30 +113,61 @@ select {
   display: inline-block;
   position: relative;
   margin-left: 50%;
+  margin-bottom: 25px;
   @include transform(translateX(-50%));
 }
 
+#display {
+  width: 802px;
+  height: 160px;
+  margin-left: 50%;
+  margin-bottom: 25px;
+  @include transform(translateX(-50%));
+}
+
+#chip-8-canvas {
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+#debug-display {
+  float: right;
+  width: 160px;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+}
+
 #registers {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  box-sizing: border-box;
+
   padding: 5px;
   border: 1px solid black;
   display: inline-grid;
-  width: 300px;
   grid-template-columns: 50% 50%;
 }
 
 .register {
   margin: 0px;
-  font-family: 'Inconsolata', monospace;
+  font-family: $body-font;
 }
 
 #assembly-code {
-  height: 100px;
-  width: 800px;
-  overflow: scroll;
+  width: 160px;
+  height: 160px;
+  position: relative;
+  box-sizing: border-box;
+
+  padding: 5px;
+  border: 1px solid black;
   display: inline-block;
+  overflow-y: scroll;
 }
 
 .assembly-line {
   margin: 0px;
-  font-family: 'Inconsolata', monospace;
+  font-family: $body-font;
 }

@@ -5,7 +5,7 @@ import './styles.scss';
 const chip8 = Chip8.new();
 const beep_sfx = new Audio("./assets/beep.mp3");
 const CYCLES_PER_FRAME = 20;
-const MIN_PIXEL_SIZE = 10;
+const MIN_PIXEL_SIZE = 5;
 const MAX_SCREEN_WIDTH = 128;
 const MAX_SCREEN_HEIGHT = 64;
 const REGISTER_COUNT = 18;
