@@ -36,6 +36,7 @@ html, button, select {
 }
 
 button {
+  box-sizing: border-box;
   border: 1px solid $accent2;
   border-radius: 3px;
   box-shadow: inset inset 0 0 0 1px $shade1;
@@ -47,6 +48,7 @@ button {
   transition: 50ms background;
 
   &:hover {
+    box-sizing: border-box;
     border: 1px solid $accent2;
     background: $accent2;
     color: #FFF;
@@ -56,9 +58,11 @@ button {
   &:disabled {
     cursor: auto;
     color: $base4;
+    box-sizing: border-box;
     border: 1px solid $shade1;
 
     &:hover {
+      box-sizing: border-box;
       border: 1px solid $shade1;
       background: #FFF;
       cursor: auto;
@@ -67,11 +71,12 @@ button {
 }
 
 select {
+  box-sizing: border-box;
   border: 1px solid $accent2;
   border-radius: 3px;
   font-size: 18px;
   text-transform: uppercase;
-  padding: 4px;
+  padding: 3.8px;
   padding-right: 20px;
   color: $accent2;
   background-color: $accent3;
@@ -86,10 +91,11 @@ select {
   content: '▼';
   font-family: FontAwesome;
   color: $accent2;
+  box-sizing: border-box;
   border-left: 1px solid $accent2;
   display: inline-block;
   position: absolute;
-  right: 2px;
+  right: 1px;
   top: -7px;
   padding-top: 2px;
   padding-bottom: 4px;
@@ -106,68 +112,141 @@ select {
   font-family: $header-font;
   font-size: 60px;
   padding: 30px 20px 25px 20px;
+  box-sizing: border-box;
   border-bottom: 3px solid $accent1;
 }
 
 #menu-buttons {
-  display: inline-block;
+  text-align: center;
   position: relative;
-  margin-left: 50%;
-  margin-bottom: 25px;
-  @include transform(translateX(-50%));
 }
 
 #display {
-  width: 802px;
-  height: 160px;
+  width: 80%;
   margin-left: 50%;
   margin-bottom: 25px;
+  overflow: hidden;
+  position: relative;
   @include transform(translateX(-50%));
 }
 
-#chip-8-canvas {
-  box-sizing: border-box;
-  border: 1px solid black;
+#chip-8-canvas-wrapper {
+  width: 80%;
+  float: left;
+  padding: 5px;
+
+  #chip-8-canvas {
+    box-sizing: border-box;
+    border: 2px solid $shade1;
+    box-shadow: inset inset 0 0 0 1px $shade1;
+    border-radius: 7px;
+    position: relative;
+    top: 50%;
+    margin-left: 50%;
+    @include transform(translate(-50%, -50%));
+  }
 }
+
 
 #debug-display {
   float: right;
-  width: 160px;
-  box-sizing: border-box;
-  position: relative;
+  width: 20%;
+  height: 100%;
+  position: absolute;
   display: inline-block;
+
+  #registers-wrapper {
+    width: calc(100% - 5px);
+    height: 50%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px;
+
+    #registers-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      box-sizing: border-box;
+      border: 2px solid $shade1;
+      box-shadow: inset inset 0 0 0 1px $shade1;
+      border-radius: 7px;
+
+      #registers {
+        top: 50%;
+        margin-left: 50%;
+        @include transform(translate(-50%, -50%));
+
+        position: absolute;
+        display: inline-grid;
+        grid-template-columns: 50% 50%;
+
+        .register {
+          margin: 0px;
+          font-family: $body-font;
+          white-space: pre;
+          font-size: 20px;
+          padding: 2px 20px;
+        }
+      }
+    }
+  }
+
+  #assembly-code-wrapper {
+    width: 100%;
+    height: 50%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px;
+
+    #assembly-code {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: 2px solid $shade1;
+      box-shadow: inset inset 0 0 0 1px $shade1;
+      border-radius: 7px;
+      display: inline-block;
+      overflow-y: scroll;
+      padding: 5px;
+
+      .assembly-line {
+        margin: 0px;
+        font-family: $body-font;
+        font-size: 20px;
+        padding-left: 15px;
+      }
+    }
+  }
 }
 
-#registers {
-  width: 160px;
-  height: 160px;
-  position: relative;
-  box-sizing: border-box;
-
-  padding: 5px;
-  border: 1px solid black;
-  display: inline-grid;
-  grid-template-columns: 50% 50%;
+@media all and (max-width: 1690px) {
+  .register {
+    font-size: 14px !important;
+    padding: 2px 14px !important;
+  }
+  .assembly-line {
+    font-size: 14px !important;
+    padding-left: 10px !important;
+  }
+}
+@media all and (max-width: 1280px) {
+  .register {
+    font-size: 12px !important;
+    padding: 0px 6px !important;
+  }
+  .assembly-line {
+    font-size: 12px !important;
+    padding-left: 5px !important;
+  }
 }
 
-.register {
-  margin: 0px;
-  font-family: $body-font;
-}
-
-#assembly-code {
-  width: 160px;
-  height: 160px;
-  position: relative;
-  box-sizing: border-box;
-
-  padding: 5px;
-  border: 1px solid black;
-  display: inline-block;
-  overflow-y: scroll;
-}
-
-.assembly-line {
-  margin: 0px;
-  font-family: $body-font;
+@media all and (max-width: 980px) {
+  .register {
+    font-size: 11px !important;
+    padding: 0px 5px !important;
+  }
+  .assembly-line {
+    font-size: 11px !important;
+    padding-left: 0px !important;
+  }
 }

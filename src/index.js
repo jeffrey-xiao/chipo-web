@@ -5,7 +5,6 @@ import './styles.scss';
 const chip8 = Chip8.new();
 const beep_sfx = new Audio("./assets/beep.mp3");
 const CYCLES_PER_FRAME = 20;
-const MIN_PIXEL_SIZE = 5;
 const MAX_SCREEN_WIDTH = 128;
 const MAX_SCREEN_HEIGHT = 64;
 const REGISTER_COUNT = 18;
@@ -45,10 +44,18 @@ const ROMS = [
   "WORM3",
 ];
 
+const canvasWrapper = document.getElementById("chip-8-canvas-wrapper");
 const canvas = document.getElementById("chip-8-canvas");
 const ctx = canvas.getContext('2d');
-canvas.height = MIN_PIXEL_SIZE * MAX_SCREEN_HEIGHT;
-canvas.width = MIN_PIXEL_SIZE * MAX_SCREEN_WIDTH;
+
+const adjustSizes = () => {
+  canvasWrapper.style.height = canvasWrapper.offsetWidth / 2 + "px";
+  canvas.width = Math.floor((canvasWrapper.offsetWidth - 10) / MAX_SCREEN_WIDTH) * MAX_SCREEN_WIDTH;
+  canvas.height = canvas.width / 2;
+};
+
+window.addEventListener('resize', adjustSizes);
+adjustSizes();
 
 let isRunning = false;
 let romName;
@@ -147,7 +154,7 @@ loadButton.addEventListener("click", load);
 const registers = [];
 for (let i = 0; i < REGISTER_COUNT; i++) {
   const registerContainer = document.getElementById("registers");
-  let register = document.createElement('pre');
+  let register = document.createElement('div');
   register.className = "register";
   registerContainer.appendChild(register);
   registers.push(register);
@@ -255,7 +262,7 @@ const drawScreen = () => {
   ctx.beginPath();
 
   const isSuper = chip8.screen_height() == MAX_SCREEN_HEIGHT;
-  const pixelSize = MIN_PIXEL_SIZE * (isSuper ? 1 : 2);
+  const pixelSize = (canvas.width / MAX_SCREEN_WIDTH) * (isSuper ? 1 : 2);
 
   ctx.fillStyle = "#000000"
   const height = chip8.screen_height();
