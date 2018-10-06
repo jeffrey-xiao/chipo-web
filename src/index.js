@@ -238,7 +238,7 @@ const disassembleMachineCode = (machineCode, isEven) => {
 };
 
 const updateAssemblyCode = () => {
-  assemblyLines[Math.round(chip8.program_counter() - 0x200) / 2].scrollIntoView(true);
+  assemblyLines[Math.round((chip8.program_counter() - 0x200) / 2)].scrollIntoView(true);
 };
 
 const updateRegisters = () => {

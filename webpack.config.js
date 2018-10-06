@@ -11,7 +11,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       'src/index.html',
-      { from: 'assets/', to: 'assets/' },
+      { from: 'assets/roms', to: 'assets/roms' },
+      { from: 'assets/beep.mp3', to: 'assets/beep.mp3' },
     ]),
   ],
   module: {
