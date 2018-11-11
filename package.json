@@ -29,6 +29,6 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
-    "chipo": "^2.0.0"
+    "chipo": "^2.1.0"
   }
 }
