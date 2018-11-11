@@ -1,5 +1,5 @@
-import { memory } from "chip-8-wasm/chip_8_wasm_bg";
-import { Chip8 } from "chip-8-wasm";
+import { memory } from "chipo/chipo_bg";
+import { Chip8 } from "chipo";
 import './styles.scss';
 
 const chip8 = Chip8.new();
@@ -44,8 +44,8 @@ const ROMS = [
   "WORM3",
 ];
 
-const canvasWrapper = document.getElementById("chip-8-canvas-wrapper");
-const canvas = document.getElementById("chip-8-canvas");
+const canvasWrapper = document.getElementById("chipo-canvas-wrapper");
+const canvas = document.getElementById("chipo-canvas");
 const ctx = canvas.getContext('2d');
 
 const adjustSizes = () => {

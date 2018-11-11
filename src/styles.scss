@@ -151,12 +151,12 @@ a.styled-link {
   @include transform(translateX(-50%));
 }
 
-#chip-8-canvas-wrapper {
+#chipo-canvas-wrapper {
   width: 80%;
   float: left;
   padding: 5px;
 
-  #chip-8-canvas {
+  #chipo-canvas {
     box-sizing: border-box;
     border: 2px solid $shade1;
     box-shadow: inset inset 0 0 0 1px $shade1;

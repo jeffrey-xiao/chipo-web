@@ -1,14 +1,14 @@
 {
-  "name": "chip-8-web",
+  "name": "chipo-web",
   "version": "0.1.0",
-  "description": "chip-8 web application",
+  "description": "CHIPO web frontend.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "deploy": "./deploy.js",
     "start": "webpack-dev-server"
   },
-  "repository": "https://gitlab.com/jeffrey-xiao/chip-8-web",
+  "repository": "https://gitlab.com/jeffrey-xiao/chipo-web",
   "keywords": [
     "webassembly",
     "wasm",
@@ -29,6 +29,6 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
-    "chip-8-wasm": "^1.0.1"
+    "chipo": "^2.0.0"
   }
 }
