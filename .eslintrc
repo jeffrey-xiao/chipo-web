@@ -7,7 +7,6 @@
   },
   "rules": {
     "arrow-parens": ["error", "always"],
-    "implicit-arrow-linebreak": 0,
     "no-bitwise": 0,
     "import/no-unresolved": 0
   },
